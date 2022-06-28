@@ -3,9 +3,9 @@
 
 #include <string>
 
-
 class FizzBuzz
 {
+
 public:
     FizzBuzz();
     ~FizzBuzz();
@@ -16,6 +16,7 @@ private:
     FizzBuzz &operator=(const FizzBuzz &) = delete;
     FizzBuzz(FizzBuzz &&) = delete;
     FizzBuzz &operator=(FizzBuzz &&) = delete;
+
 }; // class FizzBuzz
 
 #endif // FizzBuzz_H
