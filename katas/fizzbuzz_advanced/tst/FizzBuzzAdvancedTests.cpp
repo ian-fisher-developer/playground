@@ -1,110 +1,48 @@
 #include "../src/FizzBuzzAdvanced.h"
+#include <vector>
 #include <gtest/gtest.h>
 
-TEST(FizzBuzzAdvanced, SaysOne)
+
+class FizzBuzzAdvancedTest : public ::testing::TestWithParam<std::pair<int, std::string>>
 {
+protected:
     FizzBuzzAdvanced player;
-    EXPECT_EQ("1", player.say(1));
+
+}; // class FizzBuzzAdvandedTest
+
+
+TEST_P(FizzBuzzAdvancedTest, SaysResponse)
+{
+    EXPECT_EQ(GetParam().second, player.say(GetParam().first));
 }
 
-TEST(FizzBuzzAdvanced, SaysTwo)
+
+namespace { // unnamed namespace
+
+typedef std::pair<int, std::string> io_t;
+typedef std::vector<io_t> spec_t;
+
+spec_t initializeSpecification()
 {
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("2", player.say(2));
+    return spec_t{io_t(1, "1"), io_t(2, "2"), io_t(3, "FizzFizz"),
+                io_t(5, "Buzz"), io_t(6, "Fizz"), io_t(10, "Buzz"),
+                io_t(13, "Fizz"), io_t(15, "FizzBuzz"), io_t(30, "FizzFizzBuzz"),
+                io_t(31, "Fizz"), io_t(32, "Fizz"), io_t(33, "FizzFizzFizz"),
+                io_t(35, "FizzBuzz"), io_t(36, "FizzFizz"), io_t(39, "FizzFizz"),
+                io_t(40, "Buzz"), io_t(60, "FizzBuzz"), io_t(98, "98"),
+                io_t(300, "FizzFizzBuzz"), io_t(333, "FizzFizzFizzFizz")
+    };
 }
 
-TEST(FizzBuzzAdvanced, SaysThree)
+const spec_t &specification()
 {
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("FizzFizz", player.say(3));
+    static spec_t inputsAndOutputs;
+    if( inputsAndOutputs.empty() ){
+        inputsAndOutputs = initializeSpecification();
+    }
+    return inputsAndOutputs;
 }
 
-TEST(FizzBuzzAdvanced, SaysFive)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("Buzz", player.say(5));
-}
+INSTANTIATE_TEST_SUITE_P(FizzBuzzAdvancedTestSuite, FizzBuzzAdvancedTest, testing::ValuesIn(specification()));
 
-TEST(FizzBuzzAdvanced, SaysSix)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("Fizz", player.say(6));
-}
-
-TEST(FizzBuzzAdvanced, SaysTen)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("Buzz", player.say(10));
-}
-
-TEST(FizzBuzzAdvanced, SaysThirteen)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("Fizz", player.say(13));
-}
-
-TEST(FizzBuzzAdvanced, SaysFifteen)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("FizzBuzz", player.say(15));
-}
-
-TEST(FizzBuzzAdvanced, SaysThirty)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("FizzFizzBuzz", player.say(30));
-}
-
-TEST(FizzBuzzAdvanced, SaysThirtyOne)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("Fizz", player.say(31));
-}
-
-TEST(FizzBuzzAdvanced, SaysThirtyTwo)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("Fizz", player.say(32));
-}
-
-TEST(FizzBuzzAdvanced, SaysThirtyThree)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("FizzFizzFizz", player.say(33));
-}
-
-TEST(FizzBuzzAdvanced, SaysThirtyFive)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("FizzBuzz", player.say(35));
-}
-
-TEST(FizzBuzzAdvanced, SaysThirtySix)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("FizzFizz", player.say(36));
-}
-
-TEST(FizzBuzzAdvanced, SaysThirtyNine)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("FizzFizz", player.say(39));
-}
-
-TEST(FizzBuzzAdvanced, SaysForty)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("Buzz", player.say(40));
-}
-
-TEST(FizzBuzzAdvanced, SaysSixty)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("FizzBuzz", player.say(60));
-}
-
-TEST(FizzBuzzAdvanced, SaysThreeHundred)
-{
-    FizzBuzzAdvanced player;
-    EXPECT_EQ("FizzFizzBuzz", player.say(300));
-}
+} // unnamed namespace
