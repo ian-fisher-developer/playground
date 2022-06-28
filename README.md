@@ -1,3 +1,3 @@
 # Playground
 
-Miscellaneous minor experiments.
+Miscellaneous bits and pieces.

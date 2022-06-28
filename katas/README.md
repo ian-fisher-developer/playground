@@ -1,3 +1,5 @@
 # Katas
 
-Simple exercises, practicing test-driven-development discipline, even in the most trivial cases.
+Simple test-driven-development exercises.
+
+Practicing these can help maintain TDD discipline, even in the most trivial cases.
