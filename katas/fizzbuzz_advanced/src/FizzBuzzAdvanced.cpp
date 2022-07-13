@@ -11,9 +11,9 @@ std::string wordFor5(){ return "Buzz"; }
 
 std::string intString(int i)
 {
-    std::stringstream s;
-    s << i;
-    return s.str();
+    std::stringstream ss;
+    ss << i;
+    return ss.str();
 }
 
 std::string fizzEach3Digit(int i)

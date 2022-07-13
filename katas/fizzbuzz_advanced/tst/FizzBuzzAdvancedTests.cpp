@@ -3,20 +3,6 @@
 #include <gtest/gtest.h>
 
 
-class FizzBuzzAdvancedTest : public ::testing::TestWithParam<std::pair<int, std::string>>
-{
-protected:
-    FizzBuzzAdvanced player;
-
-}; // class FizzBuzzAdvandedTest
-
-
-TEST_P(FizzBuzzAdvancedTest, SaysResponse)
-{
-    EXPECT_EQ(GetParam().second, player.say(GetParam().first));
-}
-
-
 namespace { // unnamed namespace
 
 typedef std::pair<int, std::string> io_t;
@@ -43,6 +29,37 @@ const spec_t &specification()
     return inputsAndOutputs;
 }
 
-INSTANTIATE_TEST_SUITE_P(FizzBuzzAdvancedTestSuite, FizzBuzzAdvancedTest, testing::ValuesIn(specification()));
+} // unnamed namespace
+
+
+class FizzBuzzAdvancedTestSuite : public ::testing::TestWithParam<io_t>
+{
+protected:
+    FizzBuzzAdvanced player;
+
+}; // class FizzBuzzAdvancedTestSuite
+
+
+TEST_P(FizzBuzzAdvancedTestSuite, SaysResponse)
+{
+    io_t io = GetParam();
+    auto i = io.first;
+    auto expected = io.second;
+    EXPECT_EQ(expected, player.say(i));
+}
+
+
+namespace { // unnamed namespace
+
+std::string testName(const testing::TestParamInfo<FizzBuzzAdvancedTestSuite::ParamType>& info)
+{
+    io_t io = info.param;
+    std::stringstream ss;
+    ss << io.first;
+    return ss.str();
+}
+
+INSTANTIATE_TEST_SUITE_P(FizzBuzzAdvancedTestGroup, FizzBuzzAdvancedTestSuite,
+                         testing::ValuesIn(specification()), testName);
 
 } // unnamed namespace
